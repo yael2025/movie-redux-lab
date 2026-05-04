@@ -4,7 +4,7 @@ import MovieList from '../components/MovieList';
 import type { Movie, MovieDraft } from '../features/movies/movieTypes';
 import { useSelector , useDispatch} from "react-redux";
 import type { RootState } from "../app/store";
-import { setMovies, addMovie  } from '../features/movies/moviesSlice';
+import { setMovies, addMovie, removeMovie  } from '../features/movies/moviesSlice';
 
 export default function MoviesPage() {
   const [editing, setEditing] = useState<Movie | null>(null);
@@ -54,7 +54,9 @@ export default function MoviesPage() {
 
   const handleEdit = (movie: Movie) => setEditing(movie);
 
-  const handleDelete = (_id: string) => {};
+  const handleDelete = (id: string) => {
+    dispatch(removeMovie(id));
+  };
 
   return (
     <div className="page">

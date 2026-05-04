@@ -33,9 +33,14 @@ const moviesSlice = createSlice({
     },
     addMovie(state,action:PayloadAction<Movie>){
       state.items.push(action.payload);
+    },
+    removeMovie(state, action:PayloadAction<string>){
+      state.items = state.items.filter(
+        (movie)=>movie._id !== action.payload
+      )
     }
   },
 });
 
-export const {setMovies , addMovie } = moviesSlice.actions;
+export const {setMovies , addMovie, removeMovie } = moviesSlice.actions;
 export default moviesSlice.reducer;
