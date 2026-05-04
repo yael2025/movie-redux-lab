@@ -2,12 +2,14 @@ import { useState } from 'react';
 import MovieForm from '../components/MovieForm';
 import MovieList from '../components/MovieList';
 import type { Movie, MovieDraft } from '../features/movies/movieTypes';
+import { useSelector } from "react-redux";
+import type { RootState } from "../app/store";
 
 export default function MoviesPage() {
   const [editing, setEditing] = useState<Movie | null>(null);
 
   // TODO (exercise): read movies from the Redux store
-  const movies: Movie[] = [];
+  const movies= useSelector((state:RootState)=> state.movies.items);
   const loading = false;
   const error: string | null = null;
 
