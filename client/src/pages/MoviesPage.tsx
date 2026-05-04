@@ -1,15 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import MovieForm from '../components/MovieForm';
 import MovieList from '../components/MovieList';
 import type { Movie, MovieDraft } from '../features/movies/movieTypes';
-import { useSelector } from "react-redux";
+import { useSelector , useDispatch} from "react-redux";
 import type { RootState } from "../app/store";
+import { setMovies } from '../features/movies/moviesSlice';
 
 export default function MoviesPage() {
   const [editing, setEditing] = useState<Movie | null>(null);
+  const dispatch = useDispatch();
 
   // TODO (exercise): read movies from the Redux store
   const movies= useSelector((state:RootState)=> state.movies.items);
+  useEffect(()=>{
+    dispatch(setMovies([
+      {
+        _id: "1",
+        title: "Inception",
+        director: "Christopher Nolan",
+        year: 2010,
+        genre: "Sci-Fi",
+      },
+      {
+        _id: "2",
+        title: "Interstellar",
+        director: "Christopher Nolan",
+        year: 2014,
+        genre: "Sci-Fi",
+      },
+      {
+        _id: "3",
+        title: "The Dark Knight",
+        director: "Christopher Nolan",
+        year: 2008,
+        genre: "Action",
+      },
+    ]))
+  },[dispatch])
   const loading = false;
   const error: string | null = null;
 

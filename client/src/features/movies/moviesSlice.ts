@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { MoviesState } from './movieTypes';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { Movie, MoviesState } from './movieTypes';
 
 const initialState: MoviesState = {
   items: [
@@ -28,8 +28,11 @@ const moviesSlice = createSlice({
   reducers: {
     // TODO (exercise): add reducers here
     // e.g. setMovies, addMovie, removeMovie, updateMovie
+    setMovies(state, action: PayloadAction<Movie[]>){
+      state.items = action.payload;
+    }
   },
 });
 
-export const {} = moviesSlice.actions;
+export const {setMovies } = moviesSlice.actions;
 export default moviesSlice.reducer;
