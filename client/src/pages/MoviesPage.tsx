@@ -4,7 +4,7 @@ import MovieList from '../components/MovieList';
 import type { Movie, MovieDraft } from '../features/movies/movieTypes';
 import { useSelector , useDispatch} from "react-redux";
 import type { RootState } from "../app/store";
-import { setMovies, addMovie, removeMovie  } from '../features/movies/moviesSlice';
+import { setMovies, addMovie, removeMovie, updateMovieInStore   } from '../features/movies/moviesSlice';
 
 export default function MoviesPage() {
   const [editing, setEditing] = useState<Movie | null>(null);
@@ -42,7 +42,12 @@ export default function MoviesPage() {
 
   // TODO (exercise): replace stubs with Redux dispatches / thunks
   const handleSubmit = (_draft: MovieDraft, _id?: string) => {
-    if (!_id) {
+    if (_id) {
+      dispatch(updateMovieInStore({
+        _id: _id,
+        ..._draft,
+      }));
+    } else {
       dispatch(addMovie({
         _id: crypto.randomUUID(),
         ..._draft,

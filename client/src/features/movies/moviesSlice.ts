@@ -38,9 +38,18 @@ const moviesSlice = createSlice({
       state.items = state.items.filter(
         (movie)=>movie._id !== action.payload
       )
+    },
+    updateMovieInStore(state, action:PayloadAction<Movie>){
+      const index = state.items.findIndex(
+        (movie)=> movie._id === action.payload._id
+      )
+
+      if(index!== -1){
+        state.items[index] = action.payload
+      }
     }
   },
 });
 
-export const {setMovies , addMovie, removeMovie } = moviesSlice.actions;
+export const {setMovies , addMovie, removeMovie, updateMovieInStore  } = moviesSlice.actions;
 export default moviesSlice.reducer;
