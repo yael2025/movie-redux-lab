@@ -52,4 +52,12 @@ const moviesSlice = createSlice({
 });
 
 export const {setMovies , addMovie, removeMovie, updateMovieInStore  } = moviesSlice.actions;
+
 export default moviesSlice.reducer;
+
+import type { RootState  } from "../../app/store";
+
+export const selectMovies = (state:RootState)=> state.movies.items
+
+export const selectMovieById = (id:string)=> (state: RootState)=>
+  state.movies.items.find((m)=> m._id===id)
