@@ -10,8 +10,11 @@ import {
   updateMovieInStore,
   selectMovies,
   selectLoading,
-  selectError
+  selectError,
+  setLoading,
+  setError
 } from '../features/movies/moviesSlice';
+import { moviesApi } from '../features/movies/moviesApi';
 export default function MoviesPage() {
   const [editing, setEditing] = useState<Movie | null>(null);
   const dispatch = useAppDispatch();
@@ -19,29 +22,25 @@ export default function MoviesPage() {
   // TODO (exercise): read movies from the Redux store
   const movies= useAppSelector(selectMovies);
   useEffect(()=>{
-    dispatch(setMovies([
-      {
-        _id: "1",
-        title: "Inception",
-        director: "Christopher Nolan",
-        year: 2010,
-        genre: "Sci-Fi",
-      },
-      {
-        _id: "2",
-        title: "Interstellar",
-        director: "Christopher Nolan",
-        year: 2014,
-        genre: "Sci-Fi",
-      },
-      {
-        _id: "3",
-        title: "The Dark Knight",
-        director: "Christopher Nolan",
-        year: 2008,
-        genre: "Action",
-      },
-    ]))
+    const fafchMovies = async () =>{
+      try{
+        dispatch(setLoading(true))
+
+        const data = await moviesApi.list()
+        console.log("MOVIES FROM API", data);
+        
+        dispatch(setMovies(data))
+
+        dispatch(setError(null))
+      }
+      catch(err:any){
+        dispatch(setError(err.message))
+      }
+      finally{
+        dispatch(setLoading(false))
+      }
+    }
+    fafchMovies()
   },[dispatch])
   const loading = useAppSelector(selectLoading);
   const error  = useAppSelector(selectError)
