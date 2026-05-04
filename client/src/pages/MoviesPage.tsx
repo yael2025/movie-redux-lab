@@ -2,16 +2,15 @@ import { useState, useEffect } from 'react';
 import MovieForm from '../components/MovieForm';
 import MovieList from '../components/MovieList';
 import type { Movie, MovieDraft } from '../features/movies/movieTypes';
-import { useSelector , useDispatch} from "react-redux";
-import type { RootState } from "../app/store";
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { setMovies, addMovie, removeMovie, updateMovieInStore   } from '../features/movies/moviesSlice';
 
 export default function MoviesPage() {
   const [editing, setEditing] = useState<Movie | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // TODO (exercise): read movies from the Redux store
-  const movies= useSelector((state:RootState)=> state.movies.items);
+  const movies= useAppSelector((state)=> state.movies.items);
   useEffect(()=>{
     dispatch(setMovies([
       {
