@@ -3,8 +3,15 @@ import MovieForm from '../components/MovieForm';
 import MovieList from '../components/MovieList';
 import type { Movie, MovieDraft } from '../features/movies/movieTypes';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { setMovies, addMovie, removeMovie, updateMovieInStore, selectMovies    } from '../features/movies/moviesSlice';
-
+import {
+  setMovies,
+  addMovie,
+  removeMovie,
+  updateMovieInStore,
+  selectMovies,
+  selectLoading,
+  selectError
+} from '../features/movies/moviesSlice';
 export default function MoviesPage() {
   const [editing, setEditing] = useState<Movie | null>(null);
   const dispatch = useAppDispatch();
@@ -36,8 +43,8 @@ export default function MoviesPage() {
       },
     ]))
   },[dispatch])
-  const loading = false;
-  const error: string | null = null;
+  const loading = useAppSelector(selectLoading);
+  const error  = useAppSelector(selectError)
 
   // TODO (exercise): replace stubs with Redux dispatches / thunks
   const handleSubmit = (_draft: MovieDraft, _id?: string) => {

@@ -47,11 +47,24 @@ const moviesSlice = createSlice({
       if(index!== -1){
         state.items[index] = action.payload
       }
-    }
+    },
+    setLoading(state, action:PayloadAction<boolean>){
+      state.loading = action.payload
+    },
+    setError(state, action:PayloadAction<string | null>){
+      state.error = action.payload
+    },
   },
 });
 
-export const {setMovies , addMovie, removeMovie, updateMovieInStore  } = moviesSlice.actions;
+export const {
+  setMovies,
+  addMovie,
+  removeMovie,
+  updateMovieInStore,
+  setLoading,
+  setError
+} = moviesSlice.actions;
 
 export default moviesSlice.reducer;
 
@@ -61,3 +74,7 @@ export const selectMovies = (state:RootState)=> state.movies.items
 
 export const selectMovieById = (id:string)=> (state: RootState)=>
   state.movies.items.find((m)=> m._id===id)
+
+export const selectLoading = (state:RootState)=> state.movies.loading
+
+export const selectError = (state: RootState)=> state.movies.error
