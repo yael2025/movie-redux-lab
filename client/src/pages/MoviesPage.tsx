@@ -4,8 +4,7 @@ import MovieList from '../components/MovieList';
 import type { Movie, MovieDraft } from '../features/movies/movieTypes';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
-  
-  updateMovieInStore,
+
   selectMovies,
   selectLoading,
   selectError,
@@ -14,6 +13,7 @@ import {
   fetchMovies,
   createMovie,
   deleteMovie,
+  updateMovie,
 } from '../features/movies/moviesSlice';
 
 import { moviesApi } from '../features/movies/moviesApi';
@@ -30,14 +30,11 @@ export default function MoviesPage() {
   const error  = useAppSelector(selectError)
 
   // TODO (exercise): replace stubs with Redux dispatches / thunks
-  const handleSubmit = (_draft: MovieDraft, _id?: string) => {
-    if (_id) {
-      dispatch(updateMovieInStore({
-        _id: _id,
-        ..._draft,
-      }));
+  const handleSubmit = (draft: MovieDraft, id?: string) => {
+    if (id) {
+      dispatch(updateMovie({ id , draft }));
     } else {
-      dispatch(createMovie(_draft));
+      dispatch(createMovie(draft));
     }
   
     setEditing(null);

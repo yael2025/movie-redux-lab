@@ -42,6 +42,12 @@ export const deleteMovie = createAsyncThunk(
     return await moviesApi.remove(id);
   }
 )
+export const updateMovie = createAsyncThunk(
+'movie/update',
+async({id, draft} : {id:string; draft:MovieDraft})=>{
+  return await moviesApi.update(id, draft)
+}
+)
 const moviesSlice = createSlice({
   name: 'movies',
   initialState,
@@ -96,6 +102,14 @@ const moviesSlice = createSlice({
       state.items = state.items.filter(
         (movie)=> movie._id !== action.payload.id
       )
+    })
+    .addCase(updateMovie.fulfilled,(state, action)=>{
+      const index = state.items.findIndex(
+        (movie)=> movie._id ===action.payload._id
+      )
+      if(index!==-1){
+        state.items[index] = action.payload
+      }
     })
   },
 });
