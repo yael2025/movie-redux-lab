@@ -57,23 +57,6 @@ const moviesSlice = createSlice({
     setMovies(state, action: PayloadAction<Movie[]>){
       state.items = action.payload;
     },
-    addMovie(state,action:PayloadAction<Movie>){
-      state.items.push(action.payload);
-    },
-    removeMovie(state, action:PayloadAction<string>){
-      state.items = state.items.filter(
-        (movie)=>movie._id !== action.payload
-      )
-    },
-    updateMovieInStore(state, action:PayloadAction<Movie>){
-      const index = state.items.findIndex(
-        (movie)=> movie._id === action.payload._id
-      )
-
-      if(index!== -1){
-        state.items[index] = action.payload
-      }
-    },
     setLoading(state, action:PayloadAction<boolean>){
       state.loading = action.payload
     },
@@ -116,9 +99,6 @@ const moviesSlice = createSlice({
 
 export const {
   setMovies,
-  addMovie,
-  removeMovie,
-  updateMovieInStore,
   setLoading,
   setError
 } = moviesSlice.actions;

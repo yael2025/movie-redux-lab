@@ -4,7 +4,6 @@ import MovieList from '../components/MovieList';
 import type { Movie, MovieDraft } from '../features/movies/movieTypes';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
-
   selectMovies,
   selectLoading,
   selectError,
