@@ -1,5 +1,8 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Movie, MoviesState } from './movieTypes';
+import { moviesApi } from './moviesApi';
+
+
 
 const initialState: MoviesState = {
   items: [
@@ -21,6 +24,13 @@ const initialState: MoviesState = {
   loading: false,
   error: null,
 };
+
+export const fetchMovies = createAsyncThunk(
+  'movie/fetch',
+  async ()=>{
+    return await moviesApi.list()
+  }
+)
 
 const moviesSlice = createSlice({
   name: 'movies',
@@ -54,6 +64,21 @@ const moviesSlice = createSlice({
     setError(state, action:PayloadAction<string | null>){
       state.error = action.payload
     },
+  },
+  extraReducers:(builder)=>{
+    builder
+    .addCase(fetchMovies.pending, (state)=>{
+      state.loading= true;
+      state.error = null
+    })
+    .addCase(fetchMovies.fulfilled,(state, action)=>{
+      state.loading = false
+      state.items = action.payload
+    })
+    .addCase(fetchMovies.rejected,(state, action)=>{
+      state.loading = false
+      state.error = action.error.message ?? 'Failed to fetch movies'
+    })
   },
 });
 

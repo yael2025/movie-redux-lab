@@ -4,7 +4,6 @@ import MovieList from '../components/MovieList';
 import type { Movie, MovieDraft } from '../features/movies/movieTypes';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
-  setMovies,
   addMovie,
   removeMovie,
   updateMovieInStore,
@@ -12,8 +11,10 @@ import {
   selectLoading,
   selectError,
   setLoading,
-  setError
+  setError,
+  fetchMovies,
 } from '../features/movies/moviesSlice';
+
 import { moviesApi } from '../features/movies/moviesApi';
 export default function MoviesPage() {
   const [editing, setEditing] = useState<Movie | null>(null);
@@ -21,27 +22,9 @@ export default function MoviesPage() {
 
   // TODO (exercise): read movies from the Redux store
   const movies= useAppSelector(selectMovies);
-  useEffect(()=>{
-    const fafchMovies = async () =>{
-      try{
-        dispatch(setLoading(true))
-
-        const data = await moviesApi.list()
-        console.log("MOVIES FROM API", data);
-        
-        dispatch(setMovies(data))
-
-        dispatch(setError(null))
-      }
-      catch(err:any){
-        dispatch(setError(err.message))
-      }
-      finally{
-        dispatch(setLoading(false))
-      }
-    }
-    fafchMovies()
-  },[dispatch])
+  useEffect(() => {
+    dispatch(fetchMovies());
+  }, [dispatch]);
   const loading = useAppSelector(selectLoading);
   const error  = useAppSelector(selectError)
 
