@@ -4,7 +4,7 @@ import MovieList from '../components/MovieList';
 import type { Movie, MovieDraft } from '../features/movies/movieTypes';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
-  removeMovie,
+  
   updateMovieInStore,
   selectMovies,
   selectLoading,
@@ -13,6 +13,7 @@ import {
   setError,
   fetchMovies,
   createMovie,
+  deleteMovie,
 } from '../features/movies/moviesSlice';
 
 import { moviesApi } from '../features/movies/moviesApi';
@@ -45,7 +46,7 @@ export default function MoviesPage() {
   const handleEdit = (movie: Movie) => setEditing(movie);
 
   const handleDelete = (id: string) => {
-    dispatch(removeMovie(id));
+    dispatch(deleteMovie(id));
   };
 
   return (
