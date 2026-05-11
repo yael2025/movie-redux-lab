@@ -4,7 +4,6 @@ import MovieList from '../components/MovieList';
 import type { Movie, MovieDraft } from '../features/movies/movieTypes';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
-  addMovie,
   removeMovie,
   updateMovieInStore,
   selectMovies,
@@ -13,6 +12,7 @@ import {
   setLoading,
   setError,
   fetchMovies,
+  createMovie,
 } from '../features/movies/moviesSlice';
 
 import { moviesApi } from '../features/movies/moviesApi';
@@ -36,10 +36,7 @@ export default function MoviesPage() {
         ..._draft,
       }));
     } else {
-      dispatch(addMovie({
-        _id: crypto.randomUUID(),
-        ..._draft,
-      }));
+      dispatch(createMovie(_draft));
     }
   
     setEditing(null);
